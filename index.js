@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { query } = require('express');
 require('dotenv').config()
 const port = process.env.PORT || 5000
 const app = express()
@@ -23,6 +24,12 @@ async function run(){
         const cursor = productCollection.find(query)
         const product = await cursor.toArray()
         res.send(product)
+    })
+    app.get('/productCount', async(req, res)=>{
+        const qurey ={}
+        const cursor = productCollection.find(query)
+        const count = await cursor.count()
+        res.send({count})
     })
  }
  finally{
